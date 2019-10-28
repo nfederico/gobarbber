@@ -8,8 +8,8 @@ const routes = new Router();
 routes.post('/users',UserController.store);
 routes.post('/sessions',SessionController.store);
 
-//routes.use('/users',AuthMiddleware);  //todo lo que viene abajo usa ese Middleware osea seria global
-//routes.put('/users',UserController.update);
-routes.put('/users',AuthMiddleware,UserController.update);
+routes.use('/users',AuthMiddleware);  //todo lo que viene abajo usa ese Middleware osea seria global
+routes.put('/users',UserController.update);
+// routes.put('/users',AuthMiddleware,UserController.update);
 
 export default routes;
