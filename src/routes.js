@@ -3,6 +3,8 @@ import multer from 'multer';
 import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import FileController from './app/controllers/FileController';
+import ProviderController from './app/controllers/ProviderController';
 import AuthMiddleware from './app/middleware/auth';
 
 const routes = new Router();
@@ -14,7 +16,7 @@ routes.post('/sessions',SessionController.store);
 routes.use('/users',AuthMiddleware);  //todo lo que viene abajo usa ese Middleware osea seria global
 routes.put('/users',UserController.update);
 // routes.put('/users',AuthMiddleware,UserController.update);
-routes.post('/files',upload.single('file'),(req,res) => {
-    return res.json({ok:true});
-});
+routes.post('/files',upload.single('file'),FileController.store);
+routes.get('/providers',ProviderController.index);
+
 export default routes;
