@@ -1,7 +1,9 @@
 import Appointment from '../models/Appointment';
+import Notification from '../Schemas/Notifications';
+
 import File from '../models/File';
 import User from '../models/User';
-import {startOfHour,parseISO,isBefore} from 'date-fns';
+import {startOfHour,parseISO,isBefore,format} from 'date-fns';
 import * as Yup from 'yup';
 import User from '../models/User';
 
@@ -79,6 +81,19 @@ class AppointmentController {
             date: hourStart,
            
         });
+
+/**
+ * Notify service provider about the new schedule
+ * 
+ */
+const user = await User.findByPk(req.userId);
+const formatedDate = format(hourStart,
+    " 'day' dd 'of' MMMM', at' H:MM'h' ");
+        await Notification.create({
+            content:`New schedule from ${user.name}  to ${formatedDate}  `,
+            user:provider_id,
+        });
+
        return res.json(appointment);
     }
     
