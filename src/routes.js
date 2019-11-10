@@ -15,11 +15,13 @@ const upload =multer(multerConfig);
 routes.post('/users',UserController.store);
 routes.post('/sessions',SessionController.store);
 
-routes.use('/users',AuthMiddleware);  //todo lo que viene abajo usa ese Middleware osea seria global
+routes.use(AuthMiddleware);  //todo lo que viene abajo usa ese Middleware osea seria global
 routes.put('/users',UserController.update);
 // routes.put('/users',AuthMiddleware,UserController.update);
-routes.post('/files',upload.single('file'),FileController.store);
+
 routes.get('/providers',ProviderController.index);
+routes.get('/appointments',AppointmentController.index);
 routes.post('/appointments',AppointmentController.store);
+routes.post('/files',upload.single('file'),FileController.store);
 
 export default routes;
